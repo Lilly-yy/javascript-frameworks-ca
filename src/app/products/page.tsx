@@ -1,5 +1,5 @@
-import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/types/product";
+import SearchBar from "@/components/SearchBar";
 
 
 type ProductsResponse = {
@@ -29,11 +29,7 @@ export default async function ProductsPage() {
           Discover something new from our collection.
         </p>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <SearchBar products={products} />
       </div>
     </section>
   );

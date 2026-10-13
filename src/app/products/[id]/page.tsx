@@ -1,4 +1,5 @@
 import type { Product } from "@/types/product";
+import AddToCartButton from "@/components/AddToCartButton";
 
 type ProductResponse = {
   data: Product;
@@ -63,12 +64,8 @@ return (
             )}
           </div>
 
-          <button
-            type="button"
-            className="w-full rounded-full bg-foreground px-8 py-4 font-medium text-background transition-colors hover:bg-accent hover:text-white md:w-fit"
-          >
-            Add to cart
-          </button>
+<AddToCartButton product={product} />
+
         </div>
       </div>
     </div>
