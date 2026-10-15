@@ -29,21 +29,24 @@ export default function Header() {
             className="w-36 sm:w-44"
           />
         </Link>
-
-        <nav
-          aria-label="Main navigation"
-          className="hidden items-center gap-8 md:flex"
-        >
-          <Link href="/" className="text-lg hover:text-accent">
-            Home
-          </Link>
-
-          <Link href="/products" className="text-lg hover:text-accent">
-            Shop
-          </Link>
-        </nav>
-
         <div className="flex items-center gap-6">
+          <nav
+            aria-label="Main navigation"
+            className="hidden items-center gap-8 md:flex"
+          >
+            <Link href="/" className="text-lg hover:text-accent">
+              Home
+            </Link>
+
+            <Link href="/products" className="text-lg hover:text-accent">
+              Shop
+            </Link>
+
+            <Link href="/contact" className="text-lg hover:text-accent">
+              Contact
+            </Link>
+          </nav>
+
           <Link
             href="/cart"
             aria-label={`Shopping cart, ${cartCount} items`}
@@ -74,7 +77,7 @@ export default function Header() {
       <nav
         id="mobile-navigation"
         aria-label="Mobile navigation"
-        className={`border-t border-black/10 px-6 py-4 md:hidden ${
+        className={`border-t border-black/10 px-6 py-4 md:hidden text-center ${
           menuOpen ? "block" : "hidden"
         }`}
       >
@@ -96,6 +99,16 @@ export default function Header() {
               className="block hover:text-accent"
             >
               Shop
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="block hover:text-accent"
+            >
+              Contact
             </Link>
           </li>
         </ul>
