@@ -17,6 +17,7 @@ type CartItem = {
 
 type CartContextType = {
   cart: CartItem[];
+  isCartLoaded: boolean;
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -117,6 +118,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider
       value={{
         cart,
+        isCartLoaded,
         addToCart,
         removeFromCart,
         updateQuantity,

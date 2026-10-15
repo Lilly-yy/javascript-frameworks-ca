@@ -1,7 +1,6 @@
 import type { Product } from "@/types/product";
 import SearchBar from "@/components/SearchBar";
 
-
 type ProductsResponse = {
   data: Product[];
 };

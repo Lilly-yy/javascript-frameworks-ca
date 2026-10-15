@@ -1,3 +1,9 @@
+export type Review = {
+  id: string;
+  username: string;
+  rating: number;
+  description: string;
+};
 
 export type Product = {
   id: string;
@@ -11,4 +17,5 @@ export type Product = {
   };
   rating: number;
   tags: string[];
+  reviews: Review[];
 };

@@ -1,28 +1,51 @@
-
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { Trash2, Minus, Plus } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useEffect, useState } from "react";
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity } = useCart();
+  const { cart, removeFromCart, updateQuantity, isCartLoaded } = useCart();
 
+  const [removedProduct, setRemovedProduct] = useState<string | null>(null);
+
+  function handleRemove(productId: string, productTitle: string) {
+    removeFromCart(productId);
+    setRemovedProduct(productTitle);
+  }
+  useEffect(() => {
+    if (!removedProduct) return;
+
+    const timeout = setTimeout(() => {
+      setRemovedProduct(null);
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [removedProduct]);
   const total = cart.reduce(
-    (sum, item) =>
-      sum + item.product.discountedPrice * item.quantity,
-    0
+    (sum, item) => sum + item.product.discountedPrice * item.quantity,
+    0,
   );
 
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 md:pl-16">
-        <h1 className="mb-10 text-4xl font-semibold">
-          Your shopping cart
-        </h1>
-
-        {cart.length === 0 ? (
+        <h1 className="mb-10 text-4xl font-semibold">Your shopping cart</h1>
+        {removedProduct && (
+          <div
+            role="status"
+            className="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-foreground px-6 py-4 text-sm font-medium text-background shadow-lg"
+          >
+            {removedProduct} removed from cart!
+          </div>
+        )}
+        {!isCartLoaded ? (
+          <div className="py-16 text-center" role="status">
+            <p className="text-lg text-foreground/70">Loading your cart...</p>
+          </div>
+        ) : cart.length === 0 ? (
           <div className="py-16 text-center">
             <p className="mb-6 text-lg text-foreground/70">
               Your cart is empty.
@@ -37,7 +60,6 @@ export default function CartPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-            {/* Cart items */}
             <div className="space-y-6 lg:col-span-2">
               {cart.map((item) => (
                 <article
@@ -76,10 +98,7 @@ export default function CartPage() {
                         <button
                           type="button"
                           onClick={() =>
-                            updateQuantity(
-                              item.product.id,
-                              item.quantity - 1
-                            )
+                            updateQuantity(item.product.id, item.quantity - 1)
                           }
                           aria-label={`Decrease quantity of ${item.product.title}`}
                           className="p-3 hover:text-accent"
@@ -94,10 +113,7 @@ export default function CartPage() {
                         <button
                           type="button"
                           onClick={() =>
-                            updateQuantity(
-                              item.product.id,
-                              item.quantity + 1
-                            )
+                            updateQuantity(item.product.id, item.quantity + 1)
                           }
                           aria-label={`Increase quantity of ${item.product.title}`}
                           className="p-3 hover:text-accent"
@@ -109,7 +125,7 @@ export default function CartPage() {
                       <button
                         type="button"
                         onClick={() =>
-                          removeFromCart(item.product.id)
+                          handleRemove(item.product.id, item.product.title)
                         }
                         aria-label={`Remove ${item.product.title}`}
                         className="flex items-center gap-2 text-sm text-foreground/60 hover:text-accent"
@@ -123,11 +139,8 @@ export default function CartPage() {
               ))}
             </div>
 
-            {/* Order summary */}
             <aside className="h-fit rounded-xl bg-white p-6">
-              <h2 className="mb-6 text-xl font-semibold">
-                Order summary
-              </h2>
+              <h2 className="mb-6 text-xl font-semibold">Order summary</h2>
 
               <div className="mb-6 flex justify-between">
                 <span>Subtotal</span>

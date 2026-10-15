@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
-  const { cart, clearCart } = useCart();
+  const { cart, clearCart, isCartLoaded } = useCart();
   const router = useRouter();
 
   const total = cart.reduce(
@@ -50,7 +50,11 @@ export default function CheckoutPage() {
       <div className="mx-auto max-w-7xl px-6 md:pl-16">
         <h1 className="mb-10 text-4xl font-semibold">Checkout</h1>
 
-        {cart.length === 0 ? (
+        {!isCartLoaded ? (
+          <div className="py-16 text-center" role="status">
+            <p className="text-lg text-foreground/70">Loading your cart...</p>
+          </div>
+        ) : cart.length === 0 ? (
           <div className="py-16 text-center">
             <p className="mb-6 text-lg text-foreground/70">
               Your cart is empty.
@@ -65,7 +69,6 @@ export default function CheckoutPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-            {/* Customer information */}
             <div className="rounded-xl bg-white p-8 lg:col-span-2">
               <h2 className="mb-6 text-2xl font-semibold">
                 Customer information
@@ -191,7 +194,6 @@ export default function CheckoutPage() {
               </form>
             </div>
 
-            {/* Order summary */}
             <aside className="h-fit rounded-xl bg-white p-6">
               <h2 className="mb-6 text-xl font-semibold">Order summary</h2>
 

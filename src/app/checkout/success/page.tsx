@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -44,9 +43,7 @@ export default function CheckoutSuccessPage() {
   if (!order) {
     return (
       <main className="mx-auto max-w-2xl px-6 py-20 text-center">
-        <h1 className="mb-4 text-3xl font-semibold">
-          No order found
-        </h1>
+        <h1 className="mb-4 text-3xl font-semibold">No order found</h1>
         <p className="mb-8 text-foreground/70">
           We couldn't find an order confirmation.
         </p>
@@ -71,27 +68,20 @@ export default function CheckoutSuccessPage() {
         </h1>
 
         <p className="mb-8 text-foreground/70">
-          Thank you, {order.customerName}! Your order has
-          been successfully placed.
+          Thank you, {order.customerName}! Your order has been successfully
+          placed.
         </p>
 
         <div className="mb-8 border-t border-b border-black/10 py-6 text-left">
-          <h2 className="mb-4 text-xl font-semibold">
-            Order summary
-          </h2>
+          <h2 className="mb-4 text-xl font-semibold">Order summary</h2>
 
           <div className="space-y-3">
             {order.items.map((item, index) => (
-              <div
-                key={index}
-                className="flex justify-between gap-4 text-sm"
-              >
+              <div key={index} className="flex justify-between gap-4 text-sm">
                 <span>
                   {item.title} × {item.quantity}
                 </span>
-                <span>
-                  {(item.price * item.quantity).toFixed(2)} kr
-                </span>
+                <span>{(item.price * item.quantity).toFixed(2)} kr</span>
               </div>
             ))}
           </div>
