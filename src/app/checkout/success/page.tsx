@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
@@ -13,31 +13,30 @@ type OrderConfirmation = {
     price: number;
   }[];
 };
+const subscribe = () => () => {};
 
+function getOrderSnapshot() {
+  return sessionStorage.getItem("nova-last-order");
+}
+
+function getServerSnapshot() {
+  return null;
+}
 export default function CheckoutSuccessPage() {
-  const [order, setOrder] = useState<OrderConfirmation | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const savedOrder = useSyncExternalStore(
+    subscribe,
+    getOrderSnapshot,
+    getServerSnapshot,
+  );
 
-  useEffect(() => {
+  let order: OrderConfirmation | null = null;
+
+  if (savedOrder) {
     try {
-      const savedOrder = sessionStorage.getItem("nova-last-order");
-
-      if (savedOrder) {
-        setOrder(JSON.parse(savedOrder) as OrderConfirmation);
-      }
+      order = JSON.parse(savedOrder) as OrderConfirmation;
     } catch (error) {
       console.error("Failed to load order:", error);
-    } finally {
-      setIsLoaded(true);
     }
-  }, []);
-
-  if (!isLoaded) {
-    return (
-      <main className="py-20 text-center">
-        <p>Loading order confirmation...</p>
-      </main>
-    );
   }
 
   if (!order) {
@@ -45,7 +44,7 @@ export default function CheckoutSuccessPage() {
       <main className="mx-auto max-w-2xl px-6 py-20 text-center">
         <h1 className="mb-4 text-3xl font-semibold">No order found</h1>
         <p className="mb-8 text-foreground/70">
-          We couldn't find an order confirmation.
+          We could not find an order confirmation.
         </p>
         <Link href="/products" className="underline">
           Continue shopping

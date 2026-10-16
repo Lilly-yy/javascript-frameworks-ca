@@ -28,37 +28,42 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
-
   const [isCartLoaded, setIsCartLoaded] = useState(false);
 
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem("nova-cart");
+    const loadCart = () => {
+      try {
+        const savedCart = localStorage.getItem("nova-cart");
 
-      if (savedCart) {
-        const parsedCart: unknown = JSON.parse(savedCart);
+        if (savedCart) {
+          const parsedCart: unknown = JSON.parse(savedCart);
 
-        if (Array.isArray(parsedCart)) {
-          const validCart = parsedCart.filter(
-            (item): item is CartItem =>
-              item !== null &&
-              typeof item === "object" &&
-              item.product !== null &&
-              typeof item.product === "object" &&
-              typeof item.product.id === "string" &&
-              typeof item.product.discountedPrice === "number" &&
-              Number.isInteger(item.quantity) &&
-              item.quantity > 0,
-          );
+          if (Array.isArray(parsedCart)) {
+            const validCart = parsedCart.filter(
+              (item): item is CartItem =>
+                item !== null &&
+                typeof item === "object" &&
+                item.product !== null &&
+                typeof item.product === "object" &&
+                typeof item.product.id === "string" &&
+                typeof item.product.discountedPrice === "number" &&
+                Number.isInteger(item.quantity) &&
+                item.quantity > 0,
+            );
 
-          setCart(validCart);
+            setCart(validCart);
+          }
         }
+      } catch (error) {
+        console.error("Failed to load cart:", error);
+      } finally {
+        setIsCartLoaded(true);
       }
-    } catch (error) {
-      console.error("Failed to load cart:", error);
-    } finally {
-      setIsCartLoaded(true);
-    }
+    };
+
+    const timeoutId = window.setTimeout(loadCart, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
@@ -70,7 +75,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
       console.error("Failed to save cart:", error);
     }
   }, [cart, isCartLoaded]);
-
   function addToCart(product: Product) {
     setCart((currentCart) => {
       const existingItem = currentCart.find(

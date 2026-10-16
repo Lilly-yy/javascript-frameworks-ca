@@ -89,7 +89,7 @@ export default function CheckoutPage() {
                       type="text"
                       autoComplete="given-name"
                       required
-                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-accent focus:outline-none"
+                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-foreground focus:outline-none"
                     />
                   </div>
 
@@ -106,7 +106,7 @@ export default function CheckoutPage() {
                       type="text"
                       autoComplete="family-name"
                       required
-                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-accent focus:outline-none"
+                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-foreground focus:outline-none"
                     />
                   </div>
                 </div>
@@ -124,7 +124,7 @@ export default function CheckoutPage() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-accent focus:outline-none"
+                    className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-foreground focus:outline-none"
                   />
                 </div>
 
@@ -141,7 +141,7 @@ export default function CheckoutPage() {
                     type="text"
                     autoComplete="street-address"
                     required
-                    className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-accent focus:outline-none"
+                    className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-foreground focus:outline-none"
                   />
                 </div>
 
@@ -163,7 +163,7 @@ export default function CheckoutPage() {
                       title="Please enter a 4-digit postal code"
                       autoComplete="postal-code"
                       required
-                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-accent focus:outline-none"
+                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-foreground focus:outline-none"
                     />
                   </div>
 
@@ -180,7 +180,7 @@ export default function CheckoutPage() {
                       type="text"
                       autoComplete="address-level2"
                       required
-                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-accent focus:outline-none"
+                      className="w-full rounded-lg border border-black/15 bg-white px-4 py-3 focus:border-foreground focus:outline-none"
                     />
                   </div>
                 </div>
